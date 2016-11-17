@@ -4,7 +4,7 @@
 <h1>Welcome to the Computer Science Tutor Lab</h1>
 <h2>Please Swipe your ID or type your A#</h2>
 <form id="login-form" action="/login" name="login-form" method="post">
-    <input id="anumber-box" type="text" name="anumber" placeholder="A#"/>
+    <input id="anumber-box" type="text" name="anumber" placeholder="A#<% if(error == true){%> not found, Please try again" class="error-message<%}%>"/>
     <button type="submit">Log In</button>
 </form>
 

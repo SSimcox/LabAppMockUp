@@ -42,3 +42,7 @@ select{
     display: flex;
     flex-flow: row wrap;
 }
+
+.error-message::-webkit-input-placeholder { /* Chrome */
+    color: red;
+}

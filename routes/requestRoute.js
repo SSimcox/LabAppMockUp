@@ -6,16 +6,15 @@ var route = express.Router();
 var bodyParser = require('body-parser');
 
 
-var students = [01186010];
+route.get('/', function(req,res){
+    //Query database with anumber(req.query.anumber)
+    //Fill Class/Teacher info
 
-route.post('/', function(req,res){
-    if(!students.indexOf(req.body.anumber))
-    {
-        console.log("Search Failed");
-        res.redirect('/');
-    } else {
-        res.render('partials/request', {number: anumber});
-    }
+
+
+
+
+   res.render('partials/request', {number: req.query.number});
 });
 
-
+module.exports = route;
