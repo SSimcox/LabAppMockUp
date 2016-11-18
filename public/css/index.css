@@ -36,7 +36,7 @@ select{
     color: white;
 }
 
-#login-form{
+form{
     width: 50%;
     margin: 50px auto;
     display: flex;
@@ -45,4 +45,16 @@ select{
 
 .error-message::-webkit-input-placeholder { /* Chrome */
     color: red;
+}
+
+span{
+    margin: 0 auto;
+    display: block;
+    flex: 1 100%;
+    text-align: center;
+}
+span input {
+    display: inline;
+    width: fit-content;
+    flex:0;
 }

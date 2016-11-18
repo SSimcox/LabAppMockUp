@@ -1,0 +1,15 @@
+<% layout('index')%>
+<% block('stylesheets').append('') %>
+
+<h1>Hello <%= data.name[0].toUpperCase() + data.name.slice(1) %>, here to tutor?</h1>
+<form id="tutor-login-form" action="/tutorLogin" name="tutor-login-form" method="post">
+    <input type="hidden" name="anumber" value="<%= data.a_number %>">
+    <input type="hidden" name="name" value="<%= data.name %>">
+    <input id="password" type="password" name="password" placeholder="Enter Tutor Password (If you are tutoring)<% if(error == true){%> *Please try again*" class="error-message<%}%>">
+    <span><input id="tutoring" type="radio" name="tutoring" value="tutoring" checked>Yes</span>
+    <span><input id="need-help" type="radio" name="tutoring" value="need-help">No&nbsp</span>
+    <button id="login-button" type="submit">Clock Me In</button>
+</form>
+
+
+<% block('scripts').append('<script type="text/javascript" src="/public/js/tutorLogin.js"></script>') %>
