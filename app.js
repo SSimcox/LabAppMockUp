@@ -7,9 +7,6 @@ var engine = require('ejs-mate');
 var login = require('./routes/login');
 var tutorLogin = require('./routes/tutorLogin');
 var requestRoute = require('./routes/requestRoute');
-
-
-
 var app = express();
 
 app.use('/public',express.static('public'));
