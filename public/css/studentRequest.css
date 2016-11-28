@@ -1,0 +1,19 @@
+.class-div{
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 50%;
+    margin: 2px auto;
+    display: flex;
+}
+
+.class-div p{
+    text-align: center;
+    flex: 1 33%;
+    color: #0f2439;
+}
+
+.class-div:hover{
+    background-color: antiquewhite;
+    border: 2px solid antiquewhite;
+}

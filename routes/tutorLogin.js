@@ -3,14 +3,16 @@
  */
 var express = require('express');
 var route = express.Router();
-var bodyParser = require('body-parser');
-var parseUrlEncoder = bodyParser.urlencoded({extended: false});
 var db = require('../database/queries');
+var fs = require('fs');
+var moment = require('moment');
 
-route.post('/',parseUrlEncoder, db.loginTutor, loginErrorHandler, loginTutorSuccessHandler, db.loginStudent, loginSuccessHandler);
+route.post('/', db.loginTutor, loginErrorHandler, loginTutorSuccessHandler, db.loginStudent, loginSuccessHandler);
 
 function loginErrorHandler(err,req,res,next){
-    console.log("Error in Tutor Login: " + err);
+    var errText = "[ "+ moment(new Date()).format("YYYY-DD-MM HH:MM:SS") + "]: " + err.message + " Query: " + err.query + '\n';
+    var file = './logs/error.log';
+    fs.appendFile(file,errText, function(writeErr){console.log(writeErr)});
     var obj = {name: req.body.name, a_number:req.body.anumber};
     res.render('partials/tutorLogin', {data: obj, error: true});
 }
@@ -25,7 +27,7 @@ function loginTutorSuccessHandler(req,res, next){
 }
 
 function loginSuccessHandler(req,res){
-        res.render('partials/request', {data: req.my_data});
+        res.render('partials/studentRequest', {data: req.my_data});
 }
 
 

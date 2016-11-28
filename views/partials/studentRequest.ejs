@@ -1,0 +1,19 @@
+<% layout('index')%>
+<% block('stylesheets').append('<link href="/public/css/studentRequest.css" rel="stylesheet"/>') %>
+
+<h1><%= data.name[0].toUpperCase() + data.name.slice(1)%> Welcome to the Computer Science Tutor Lab</h1>
+<h2>Please fill out the information below to receive help</h2>
+<p><%= data.a_number%></p>
+<p><%= data.class_list%></p>
+<p><%= data.tutor%></p>
+<% data.class_list.forEach(function(val){%>
+<form class="class-div" action="" method="post">
+    <p><%= val[0] %></p>
+    <p><%= val[1] %></p>
+    <p><%= val[2] %></p>
+    <input type="hidden" name="name" value="<%= data.name%>">
+    <input type="hidden" name="anumber" value="<%= data.a_number%>">
+    <input type="hidden" name="class" value="<%= val%>">
+</form>
+<% }) %>
+<% block('scripts').append('<script type="text/javascript" src="/public/js/studentRequest.js"></script>') %>

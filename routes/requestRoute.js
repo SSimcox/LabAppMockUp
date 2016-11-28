@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var route = express.Router();
-var bodyParser = require('body-parser');
+var db = require('../database/queries');
 
 
 route.get('/', requestPage);
@@ -14,5 +14,6 @@ function requestPage(req,res){
    res.render('partials/request', {name: req.my_data.name});
 }
 
+route.post('/', db.addToQueue);
 
 module.exports = route;

@@ -7,9 +7,11 @@ var engine = require('ejs-mate');
 var login = require('./routes/login');
 var tutorLogin = require('./routes/tutorLogin');
 var requestRoute = require('./routes/requestRoute');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.use('/public',express.static('public'));
+app.use(bodyParser.urlencoded({extended: false}));
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
 app.set('/views', __dirname + '/views');
@@ -19,7 +21,6 @@ app.use('/tutorLogin', tutorLogin);
 app.use('/request', requestRoute);
 
 app.get('/',function(req,res){
-    console.log("Attempting Redirect");
     res.redirect('login');
 });
 
