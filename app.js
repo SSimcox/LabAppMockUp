@@ -5,6 +5,7 @@
 var express = require('express');
 var engine = require('ejs-mate');
 var login = require('./routes/login');
+var logout = require('./routes/logout');
 var tutorLogin = require('./routes/tutorLogin');
 var requestRoute = require('./routes/requestRoute');
 var bodyParser = require('body-parser');
@@ -19,6 +20,7 @@ app.set('/views', __dirname + '/views');
 app.use('/login', login);
 app.use('/tutorLogin', tutorLogin);
 app.use('/request', requestRoute);
+app.use('/logout', logout);
 
 app.get('/',function(req,res){
     res.redirect('login');

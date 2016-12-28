@@ -16,7 +16,7 @@ function loginErrorHandler(err,req,res,next){
 }
 
 function loginSuccessHandler(req,res, next){
-    if(req.my_data.tutor) {
+    if(req.my_data.is_tutor) {
         res.render('partials/tutorLogin', {data: req.my_data, error: false});
     } else {
         res.render('partials/studentRequest', {data: req.my_data});

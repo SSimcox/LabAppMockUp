@@ -8,6 +8,9 @@ var pgp = require('pg-promise')();
 var db = pgp(connectionString);
 
 function loginStudent(req,res,next){
+    if(req.body.anumber[0] == "a" || req.body.anumber[0] == "A"){
+        req.body.anumber = req.body.anumber.slice(1);
+    }
     var lookupNumber = parseInt(req.body.anumber);
     db.one('select * from students where a_number=$1', lookupNumber)
         .then(function(data){
@@ -66,10 +69,13 @@ function addToHelpHistory(data){
 }
 
 function logoutStudent(req,res,next){
-    db.any('delete from active_students where student_id=(select ID from students where a_number=$1', req.body.lookupNumber)
+    db.any('delete from active_students where student_id=$1', req.body.id)
         .then(function(data){
             req.my_data = data;
-            addToHelpHistory(data);
+            console.log(data);
+            if(!data.is_tutor) {
+                addToHelpHistory(data);
+            }
             next();
         }).catch(function(err){
             next(err);
@@ -78,11 +84,11 @@ function logoutStudent(req,res,next){
 function logoutAllStudents(req,res,next){}
 
 function addToActiveStudents(studentData){
-    db.none('insert into active_students(student_id,tutor) values($1,false)',studentData.id)
+    db.none('insert into active_students(student_id,is_tutor) values($1,false)',studentData.id)
         .then(function(){
             console.log('Added to Active Students');
         }).catch(function(err){
-        console.log("Not added to active students");
+        console.log("Not added to active students: " + err);
     })
 }
 
