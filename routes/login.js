@@ -5,8 +5,12 @@ var express = require('express');
 var route = express.Router();
 var db = require('../database/queries');
 
-route.get('/', function(req,res){
-    res.render('partials/studentLogin', {error: false});
+route.get('/', db.getActiveStudents, db.getQueue, function(req,res){
+    var numInQueue = 0;
+    if(req.my_data && req.my_data.length)
+        numInQueue = req.my_data.length;
+    actStudents = req.numStudents;
+    res.render('partials/studentLogin', {error: false, queue: numInQueue, actStudents: actStudents});
 });
 
 route.post('/', db.loginStudent, loginErrorHandler,loginSuccessHandler);

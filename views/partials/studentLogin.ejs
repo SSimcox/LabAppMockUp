@@ -8,4 +8,7 @@
     <button type="submit">Log In</button>
 </form>
 
+<h4>Number of students currently in the lab: <%= actStudents%> </h4>
+<h4>Number of students currently on the queue: <%= queue%></h4>
+
 <% block('scripts').append('<script type="text/javascript" src="/public/js/login.js"></script>') %>

@@ -47,16 +47,38 @@ function loginTutor(req,res,next){
 }
 
 function addToQueue(req,res,next){
-    db.none('insert into queue(student_name, class) values($1,$2)', req.body.name, req.body.class)
+    console.log("adding to queue");
+    var classArray = req.body.class.split(",");
+
+    db.none('insert into queue(student_id, student_name, class, reason, description) values($5,$1,$2,$3,$4)', [req.body.name, classArray, req.body.reason, req.body.description,req.body.studentId])
         .then(function(){
+            console.log("inserted");
             next();
         }).catch(function(err){
+        console.log("Not added to queue: " + err);
         next(err);
     })
 }
 
-function getActiveStudents(req,res,next){}
-function getQueue(req,res,next){}
+function getActiveStudents(req,res,next){
+    db.any('select * from active_students')
+        .then(function(data){
+            req.numStudents = data.length;
+        }).catch(function(err){
+            req.numStudents = 0;
+    });
+    next();
+}
+
+function getQueue(req,res,next){
+    db.any('select * from queue')
+        .then(function(data){
+            req.my_data = data;
+            next();
+        }).catch(function(err){
+            next();
+    });
+}
 
 function addToInProgress(res,req,next){}
 function addToHelpHistory(data){
@@ -72,7 +94,6 @@ function logoutStudent(req,res,next){
     db.any('delete from active_students where student_id=$1', req.body.id)
         .then(function(data){
             req.my_data = data;
-            console.log(data);
             if(!data.is_tutor) {
                 addToHelpHistory(data);
             }
@@ -86,7 +107,7 @@ function logoutAllStudents(req,res,next){}
 function addToActiveStudents(studentData){
     db.none('insert into active_students(student_id,is_tutor) values($1,false)',studentData.id)
         .then(function(){
-            console.log('Added to Active Students');
+
         }).catch(function(err){
         console.log("Not added to active students: " + err);
     })

@@ -3,20 +3,30 @@
 
 <h1><%= data.name[0].toUpperCase() + data.name.slice(1)%> Welcome to the Computer Science Tutor Lab</h1>
 <h2>Please fill out the information below to receive help</h2>
-<p><%= data.id%></p>
-<p><%= data.a_number%></p>
-<p><%= data.class_list%></p>
-<p><%= data.tutor%></p>
-<% data.class_list.forEach(function(val){%>
-<form class="class-div" action="" method="POST">
+<% var x = 0; data.class_list.forEach(function(val){%>
+<form id="form-<%= x%>" class="class-div" action="/request" method="POST">
     <p><%= val[0] %></p>
     <p><%= val[1] %></p>
     <p><%= val[2] %></p>
+    <input type="hidden" name="studentId" value="<%= data.id%>">
     <input type="hidden" name="name" value="<%= data.name%>">
     <input type="hidden" name="anumber" value="<%= data.a_number%>">
     <input type="hidden" name="class" value="<%= val%>">
+    <div class="request-form-div" hidden>
+        <div class="request-form-inner-div">
+            <span><input type="radio" name="reason" value="debug" checked>Debugging Help</span>
+            <span><input type="radio" name="reason" value="syntax">Syntax Help</span>
+            <span><input type="radio" name="reason" value="conceptual">Conceptual Help</span>
+            <span><input type="radio" name="reason" value="design">Program Design Help</span>
+        </div>
+        <div class="request-form-inner-div">
+            <div>Describe your problem:</div>
+            <textarea name="description" rows="4" cols="40"></textarea>
+        </div>
+    </div>
+    <input type="submit">
 </form>
-<% }) %>
+<% x++;}) %>
 
 <form action="/logout" method="POST">
     <input type="hidden" name="id" value="<%= data.id%>">

@@ -17,3 +17,28 @@
     background-color: antiquewhite;
     border: 2px solid antiquewhite;
 }
+
+.request-form-div{
+    color: #0f2439;
+    width: 100%;
+    align-content: center;
+    display: flex;
+    border: 1px solid #0f2439;
+}
+
+.request-form-div span{
+    width: fit-content;
+    margin: 2px;
+    display: block;
+}
+
+.request-form-div span input{
+    margin: 0 auto;
+    display: inline;
+}
+
+.request-form-inner-div{
+    flex: 1 50%;
+    background-color: #FAFCE8;
+}
+

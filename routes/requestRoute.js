@@ -14,6 +14,14 @@ function requestPage(req,res){
    res.render('partials/request', {name: req.my_data.name});
 }
 
-route.post('/', db.addToQueue);
+route.post('/', db.addToQueue, function(err,req,res,next){
+   var findUnique = /unique/.exec(err);
+   if(findUnique !== null){
+      res.redirect('/');
+   }
+
+}, function(req,res){
+   res.redirect('/');
+});
 
 module.exports = route;

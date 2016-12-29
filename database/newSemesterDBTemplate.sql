@@ -15,8 +15,11 @@ CREATE TABLE students(
 
 CREATE TABLE queue(
     id SERIAL PRIMARY KEY,
+    student_id INTEGER UNIQUE,
     student_name VARCHAR,
     class VARCHAR[],
+    reason VARCHAR,
+    description VARCHAR,
     added_to_queue TIMESTAMPTZ DEFAULT current_timestamp
 );
 
@@ -52,4 +55,3 @@ CREATE TABLE traffic_table(
 
 INSERT INTO students (name,a_number, class_list, is_tutor, password) VALUES('Steven Simcox', 01186010, '{{"CS 5410-001","Computer Graphics II","Kenneth Sundberg"},{"CS 3450-003","Software Engineering","Amanda Hughes"},{"CS 4700-001","Some CS Class","Haitao Wang"}}' ,true,'tutors');
 INSERT INTO students (name,a_number, class_list, is_tutor) VALUES('Kati Simcox', 55555, '{{"CS 5410-001","Computer Graphics II","Kenneth Sundberg"},{"CS 3450-003","Software Engineering","Amanda Hughes"},{"CS 4700-001","Some CS Class","Haitao Wang"}}', false);
-
