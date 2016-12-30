@@ -27,7 +27,6 @@ function loginStudent(req,res,next){
 function loginTutor(req,res,next){
     var lookupNumber = parseInt(req.body.anumber);
     var password = req.body.password;
-    console.log('password: ' + password);
     if(req.body.tutoring != "tutoring")
     {
         next();
@@ -35,11 +34,12 @@ function loginTutor(req,res,next){
     else {
         db.one('select * from students where a_number=$1 and password=$2', [lookupNumber, password])
             .then(function (data) {
-                addToActiveTutors(data);
-                req.my_data = data;
-                next();
+                    addToActiveTutors(data);
+                    req.my_data = data;
+                    next();
             })
             .catch(function (err) {
+                console.log(err);
                 console.log("You got thrown in the error: " + err);
                 return next(err);
             });
@@ -61,8 +61,10 @@ function addToQueue(req,res,next){
 }
 
 function getActiveStudents(req,res,next){
+    req.numStudents = 0;
     db.any('select * from active_students')
         .then(function(data){
+            if(data.length)
             req.numStudents = data.length;
         }).catch(function(err){
             req.numStudents = 0;
@@ -80,7 +82,10 @@ function getQueue(req,res,next){
     });
 }
 
-function addToInProgress(res,req,next){}
+function addToInProgress(res,req,next){
+    db.none('insert into ')
+}
+
 function addToHelpHistory(data){
     db.none('insert into traffic_table(student_id,class_name,time_in) values(${id},${},${}', data)
         .then(function(){
@@ -114,10 +119,12 @@ function addToActiveStudents(studentData){
 }
 
 function addToActiveTutors(tutorData){
-    db.none('update active_students set is_tutor=true where student_id=$1)',tutorData.id)
+    console.log(tutorData);
+    var isTutor = true;
+    db.any('update active_students set is_tutor=$2 where student_id=$1)',[tutorData.id,isTutor])
         .then(function(){
             console.log('Added to Active Queue');
-        }).catche(function(err) {
+        }).catch(function(err) {
         console.log("Not added to active queue");
     });
 }

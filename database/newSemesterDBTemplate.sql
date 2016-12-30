@@ -43,6 +43,11 @@ CREATE TABLE active_tutors(
     logged_in TIMESTAMPTZ DEFAULT current_timestamp
 );
 
+CREATE TABLE in_progress(
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER,
+);
+
 CREATE TABLE traffic_table(
     id SERIAL PRIMARY KEY,
     student_id INTEGER,
