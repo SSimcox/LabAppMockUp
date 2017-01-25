@@ -62,10 +62,10 @@ function addToQueue(req,res,next){
 
 function getActiveStudents(req,res,next){
     req.numStudents = 0;
-    db.any('select * from active_students')
+    db.any('select * from active_students where is_tutor=false')
         .then(function(data){
             if(data.length)
-            req.numStudents = data.length;
+                req.numStudents = data.length;
         }).catch(function(err){
             req.numStudents = 0;
     });
@@ -75,11 +75,30 @@ function getActiveStudents(req,res,next){
 function getQueue(req,res,next){
     db.any('select * from queue')
         .then(function(data){
-            req.my_data = data;
+            req.queue = data;
             next();
         }).catch(function(err){
             next();
     });
+}
+
+function returnQueue(){
+    console.log("In return Queue");
+    var cont = false;
+    var retData = null;
+    db.any('select * from queue')
+        .then(function(data){
+            console.log(data);
+            retData = data;
+            cont = true;
+        }).catch(function(err){
+            console.log("Returning");
+        cont = true;
+    });
+    while(!cont){
+
+    }
+    return retData;
 }
 
 function addToInProgress(res,req,next){
@@ -119,13 +138,12 @@ function addToActiveStudents(studentData){
 }
 
 function addToActiveTutors(tutorData){
-    console.log(tutorData);
     var isTutor = true;
-    db.any('update active_students set is_tutor=$2 where student_id=$1)',[tutorData.id,isTutor])
+    db.any('update active_students set is_tutor=$2 where student_id=$1',[tutorData.id,isTutor])
         .then(function(){
             console.log('Added to Active Queue');
         }).catch(function(err) {
-        console.log("Not added to active queue");
+        console.log("Not added to active queue" + err);
     });
 }
 
@@ -138,5 +156,6 @@ module.exports = {
     addToInProgress: addToInProgress,
     addToHelpHistory: addToHelpHistory,
     logoutStudent: logoutStudent,
-    logoutAllStudents: logoutAllStudents
+    logoutAllStudents: logoutAllStudents,
+    returnQueue: returnQueue
 }

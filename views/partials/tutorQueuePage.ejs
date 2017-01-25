@@ -1,6 +1,26 @@
 <% layout('index')%>
-<% block('stylesheets').append('') %>
+<% block('stylesheets').append('<link href="/public/css/studentRequest.css" rel="stylesheet"/>') %>
 
 <h1>Tutor Queue Page!!!</h1>
 
+<%var x = 0; if(queue !== undefined){%>
+
+<% queue.forEach(function(item){%>
+<form id="form-<%= x%>" class="class-div" action="/request" method="POST">
+    <p><%= item.student_name %></p>
+    <p><%= item.class[1] %></p>
+    <p><%= item.class[2] %></p>
+    <input type="hidden" name="studentId" value="<%= data.id%>">
+    <input type="hidden" name="name" value="<%= data.name%>">
+    <input type="hidden" name="anumber" value="<%= data.a_number%>">
+    <input type="hidden" name="class" value="<%= data.class%>">
+    <input type="submit">
+</form>
+<% ++x;});%>
+<%}%>
+
+<form action="/logout" method="POST">
+    <input type="hidden" name="id" value="<%= data.id%>">
+    <button id="logout" type="submit">Logout</button>
+</form>
 <% block('scripts').append('<script type="text/javascript" src="/public/js/login.js"></script>') %>

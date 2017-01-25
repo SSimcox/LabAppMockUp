@@ -7,8 +7,8 @@ var db = require('../database/queries');
 
 route.get('/', db.getActiveStudents, db.getQueue, function(req,res){
     var numInQueue = 0;
-    if(req.my_data && req.my_data.length)
-        numInQueue = req.my_data.length;
+    if(req.queue && req.queue.length)
+        numInQueue = req.queue.length;
     actStudents = req.numStudents;
     res.render('partials/studentLogin', {error: false, queue: numInQueue, actStudents: actStudents, title: "Login"});
 });
